@@ -1,3 +1,5 @@
+import useApi from '@/hooks/useApi'
+import type { UserGetProps } from '@/schemas/UserSchema';
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
