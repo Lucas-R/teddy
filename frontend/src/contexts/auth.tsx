@@ -19,7 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       setIsLoading(false);
     }
-  }, [])
+  }, []);
 
   if (isLoading) {
     return (

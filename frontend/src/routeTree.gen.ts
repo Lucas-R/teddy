@@ -9,140 +9,166 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './pages/__root'
-import { Route as AuthenticatedRouteImport } from './pages/_authenticated'
-import { Route as PublicIndexRouteImport } from './pages/_public/index'
-import { Route as AuthenticatedClientesIndexRouteImport } from './pages/_authenticated/clientes/index'
-import { Route as AuthenticatedClientesSelecionadosIndexRouteImport } from './pages/_authenticated/clientes/selecionados/index'
-import { Route as AuthenticatedClientesDetalhesIndexRouteImport } from './pages/_authenticated/clientes/detalhes/index'
+import { Route as PrivateRouteRouteImport } from './pages/_private/route'
+import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as PrivateClientesIndexRouteImport } from './pages/_private/clientes/index'
+import { Route as PrivateHomeIndexRouteImport } from './pages/_private/_home/index'
+import { Route as PrivateClientesSelecionadosIndexRouteImport } from './pages/_private/clientes/selecionados/index'
+import { Route as PrivateClientesDetalhesIndexRouteImport } from './pages/_private/clientes/detalhes/index'
 
-const AuthenticatedRoute = AuthenticatedRouteImport.update({
-  id: '/_authenticated',
+const PrivateRouteRoute = PrivateRouteRouteImport.update({
+  id: '/_private',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicIndexRoute = PublicIndexRouteImport.update({
-  id: '/_public/',
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/_auth/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateClientesIndexRoute = PrivateClientesIndexRouteImport.update({
+  id: '/clientes/',
+  path: '/clientes/',
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const PrivateHomeIndexRoute = PrivateHomeIndexRouteImport.update({
+  id: '/_home/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PrivateRouteRoute,
 } as any)
-const AuthenticatedClientesIndexRoute =
-  AuthenticatedClientesIndexRouteImport.update({
-    id: '/clientes/',
-    path: '/clientes/',
-    getParentRoute: () => AuthenticatedRoute,
-  } as any)
-const AuthenticatedClientesSelecionadosIndexRoute =
-  AuthenticatedClientesSelecionadosIndexRouteImport.update({
+const PrivateClientesSelecionadosIndexRoute =
+  PrivateClientesSelecionadosIndexRouteImport.update({
     id: '/clientes/selecionados/',
     path: '/clientes/selecionados/',
-    getParentRoute: () => AuthenticatedRoute,
+    getParentRoute: () => PrivateRouteRoute,
   } as any)
-const AuthenticatedClientesDetalhesIndexRoute =
-  AuthenticatedClientesDetalhesIndexRouteImport.update({
+const PrivateClientesDetalhesIndexRoute =
+  PrivateClientesDetalhesIndexRouteImport.update({
     id: '/clientes/detalhes/',
     path: '/clientes/detalhes/',
-    getParentRoute: () => AuthenticatedRoute,
+    getParentRoute: () => PrivateRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof PublicIndexRoute
-  '/clientes': typeof AuthenticatedClientesIndexRoute
-  '/clientes/detalhes': typeof AuthenticatedClientesDetalhesIndexRoute
-  '/clientes/selecionados': typeof AuthenticatedClientesSelecionadosIndexRoute
+  '/login': typeof AuthLoginRoute
+  '/': typeof PrivateHomeIndexRoute
+  '/clientes': typeof PrivateClientesIndexRoute
+  '/clientes/detalhes': typeof PrivateClientesDetalhesIndexRoute
+  '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof PublicIndexRoute
-  '/clientes': typeof AuthenticatedClientesIndexRoute
-  '/clientes/detalhes': typeof AuthenticatedClientesDetalhesIndexRoute
-  '/clientes/selecionados': typeof AuthenticatedClientesSelecionadosIndexRoute
+  '/login': typeof AuthLoginRoute
+  '/': typeof PrivateHomeIndexRoute
+  '/clientes': typeof PrivateClientesIndexRoute
+  '/clientes/detalhes': typeof PrivateClientesDetalhesIndexRoute
+  '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_authenticated': typeof AuthenticatedRouteWithChildren
-  '/_public/': typeof PublicIndexRoute
-  '/_authenticated/clientes/': typeof AuthenticatedClientesIndexRoute
-  '/_authenticated/clientes/detalhes/': typeof AuthenticatedClientesDetalhesIndexRoute
-  '/_authenticated/clientes/selecionados/': typeof AuthenticatedClientesSelecionadosIndexRoute
+  '/_private': typeof PrivateRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_private/_home/': typeof PrivateHomeIndexRoute
+  '/_private/clientes/': typeof PrivateClientesIndexRoute
+  '/_private/clientes/detalhes/': typeof PrivateClientesDetalhesIndexRoute
+  '/_private/clientes/selecionados/': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/clientes' | '/clientes/detalhes' | '/clientes/selecionados'
+  fullPaths:
+    | '/login'
+    | '/'
+    | '/clientes'
+    | '/clientes/detalhes'
+    | '/clientes/selecionados'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clientes' | '/clientes/detalhes' | '/clientes/selecionados'
+  to:
+    | '/login'
+    | '/'
+    | '/clientes'
+    | '/clientes/detalhes'
+    | '/clientes/selecionados'
   id:
     | '__root__'
-    | '/_authenticated'
-    | '/_public/'
-    | '/_authenticated/clientes/'
-    | '/_authenticated/clientes/detalhes/'
-    | '/_authenticated/clientes/selecionados/'
+    | '/_private'
+    | '/_auth/login'
+    | '/_private/_home/'
+    | '/_private/clientes/'
+    | '/_private/clientes/detalhes/'
+    | '/_private/clientes/selecionados/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
-  PublicIndexRoute: typeof PublicIndexRoute
+  PrivateRouteRoute: typeof PrivateRouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/_private': {
+      id: '/_private'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteImport
+      preLoaderRoute: typeof PrivateRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public/': {
-      id: '/_public/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof PublicIndexRouteImport
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/clientes/': {
-      id: '/_authenticated/clientes/'
+    '/_private/clientes/': {
+      id: '/_private/clientes/'
       path: '/clientes'
       fullPath: '/clientes'
-      preLoaderRoute: typeof AuthenticatedClientesIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof PrivateClientesIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
     }
-    '/_authenticated/clientes/selecionados/': {
-      id: '/_authenticated/clientes/selecionados/'
+    '/_private/_home/': {
+      id: '/_private/_home/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PrivateHomeIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/clientes/selecionados/': {
+      id: '/_private/clientes/selecionados/'
       path: '/clientes/selecionados'
       fullPath: '/clientes/selecionados'
-      preLoaderRoute: typeof AuthenticatedClientesSelecionadosIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof PrivateClientesSelecionadosIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
     }
-    '/_authenticated/clientes/detalhes/': {
-      id: '/_authenticated/clientes/detalhes/'
+    '/_private/clientes/detalhes/': {
+      id: '/_private/clientes/detalhes/'
       path: '/clientes/detalhes'
       fullPath: '/clientes/detalhes'
-      preLoaderRoute: typeof AuthenticatedClientesDetalhesIndexRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      preLoaderRoute: typeof PrivateClientesDetalhesIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
     }
   }
 }
 
-interface AuthenticatedRouteChildren {
-  AuthenticatedClientesIndexRoute: typeof AuthenticatedClientesIndexRoute
-  AuthenticatedClientesDetalhesIndexRoute: typeof AuthenticatedClientesDetalhesIndexRoute
-  AuthenticatedClientesSelecionadosIndexRoute: typeof AuthenticatedClientesSelecionadosIndexRoute
+interface PrivateRouteRouteChildren {
+  PrivateHomeIndexRoute: typeof PrivateHomeIndexRoute
+  PrivateClientesIndexRoute: typeof PrivateClientesIndexRoute
+  PrivateClientesDetalhesIndexRoute: typeof PrivateClientesDetalhesIndexRoute
+  PrivateClientesSelecionadosIndexRoute: typeof PrivateClientesSelecionadosIndexRoute
 }
 
-const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedClientesIndexRoute: AuthenticatedClientesIndexRoute,
-  AuthenticatedClientesDetalhesIndexRoute:
-    AuthenticatedClientesDetalhesIndexRoute,
-  AuthenticatedClientesSelecionadosIndexRoute:
-    AuthenticatedClientesSelecionadosIndexRoute,
+const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
+  PrivateHomeIndexRoute: PrivateHomeIndexRoute,
+  PrivateClientesIndexRoute: PrivateClientesIndexRoute,
+  PrivateClientesDetalhesIndexRoute: PrivateClientesDetalhesIndexRoute,
+  PrivateClientesSelecionadosIndexRoute: PrivateClientesSelecionadosIndexRoute,
 }
 
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
-  AuthenticatedRouteChildren,
+const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
+  PrivateRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  PublicIndexRoute: PublicIndexRoute,
+  PrivateRouteRoute: PrivateRouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
