@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginSchema, type LoginProps } from '@/schemas/LoginSchema'
@@ -7,18 +7,20 @@ import Title from '@/components/ui/Title'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { useAuth } from '@/hooks/useAuth'
+import { useEffect } from 'react'
 
-export const Route = createFileRoute('/_public/')({
+export const Route = createFileRoute('/_auth/login')({
   beforeLoad: ({ context }) => {
     if (context.auth.isAuthenticated) {
-      throw redirect({ to: "/clientes" })
+      throw redirect({ to: "/" })
     }
   },
   component: Login,
 })
 
 function Login() {
-  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { login, isAuthenticated } = useAuth();
   const {
     register,
     handleSubmit,
@@ -29,6 +31,10 @@ function Login() {
   const onSubmit: SubmitHandler<LoginProps> = (data) => {
     login(data);
   }
+
+  useEffect(() => {
+    if(isAuthenticated) navigate({ to: "/" });
+  }, [isAuthenticated])
 
   return (
     <header>
