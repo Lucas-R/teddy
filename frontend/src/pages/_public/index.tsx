@@ -1,14 +1,23 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import Container from '@/components/layout/Container'
 import Title from '@/components/ui/Title'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { useAuth } from '@/hooks/useAuth'
 
 export const Route = createFileRoute('/_public/')({
-  component: Index,
+  validateSearch: (search) => ({
+    redirect: (search.redirect as string) || '/',
+  }),
+  beforeLoad: ({ context, search }) => {
+    if (context.auth.isAuthenticated) {
+      throw redirect({ to: search.redirect })
+    }
+  },
+  component: Login,
 })
 
-function Index() {
+function Login() {
   return (
     <header>
       <Container className="max-w-[553px]! h-screen flex flex-col items-center justify-center gap-5">
