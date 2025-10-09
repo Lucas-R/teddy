@@ -1,13 +1,13 @@
+import { useEffect } from 'react'
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useAuth } from '@/hooks/useAuth'
 import { LoginSchema, type LoginProps } from '@/schemas/LoginSchema'
 import Container from '@/components/layout/Container'
 import Title from '@/components/ui/Title'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
-import { useAuth } from '@/hooks/useAuth'
-import { useEffect } from 'react'
 
 export const Route = createFileRoute('/_auth/login')({
   beforeLoad: ({ context }) => {

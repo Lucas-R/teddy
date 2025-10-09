@@ -9,12 +9,22 @@
     --color-black: #0F0F0F;
     --color-gray: #AAAAAA;
     --color-white: #F5F5F5;
+
+    /* --spacing-w-25: 6.25rem; */
 }
 
 body {
-    @apply font-primary text-black bg-white;
+    @apply font-primary text-black bg-white select-none;
 }
 
 button {
     @apply cursor-pointer;
+}
+
+.no-scrollbar {
+    overflow: auto;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
 }
