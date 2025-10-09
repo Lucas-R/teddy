@@ -9,51 +9,52 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './pages/__root'
-import { Route as IndexRouteImport } from './pages/index'
-import { Route as ClientesIndexRouteImport } from './pages/clientes/index'
-import { Route as ClientesSelecionadosIndexRouteImport } from './pages/clientes/selecionados/index'
-import { Route as ClientesDetalhesIndexRouteImport } from './pages/clientes/detalhes/index'
+import { Route as PublicIndexRouteImport } from './pages/_public/index'
+import { Route as PrivateClientesIndexRouteImport } from './pages/_private/clientes/index'
+import { Route as PrivateClientesSelecionadosIndexRouteImport } from './pages/_private/clientes/selecionados/index'
+import { Route as PrivateClientesDetalhesIndexRouteImport } from './pages/_private/clientes/detalhes/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
+const PublicIndexRoute = PublicIndexRouteImport.update({
+  id: '/_public/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ClientesIndexRoute = ClientesIndexRouteImport.update({
-  id: '/clientes/',
+const PrivateClientesIndexRoute = PrivateClientesIndexRouteImport.update({
+  id: '/_private/clientes/',
   path: '/clientes/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ClientesSelecionadosIndexRoute =
-  ClientesSelecionadosIndexRouteImport.update({
-    id: '/clientes/selecionados/',
+const PrivateClientesSelecionadosIndexRoute =
+  PrivateClientesSelecionadosIndexRouteImport.update({
+    id: '/_private/clientes/selecionados/',
     path: '/clientes/selecionados/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ClientesDetalhesIndexRoute = ClientesDetalhesIndexRouteImport.update({
-  id: '/clientes/detalhes/',
-  path: '/clientes/detalhes/',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const PrivateClientesDetalhesIndexRoute =
+  PrivateClientesDetalhesIndexRouteImport.update({
+    id: '/_private/clientes/detalhes/',
+    path: '/clientes/detalhes/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/clientes': typeof ClientesIndexRoute
-  '/clientes/detalhes': typeof ClientesDetalhesIndexRoute
-  '/clientes/selecionados': typeof ClientesSelecionadosIndexRoute
+  '/': typeof PublicIndexRoute
+  '/clientes': typeof PrivateClientesIndexRoute
+  '/clientes/detalhes': typeof PrivateClientesDetalhesIndexRoute
+  '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/clientes': typeof ClientesIndexRoute
-  '/clientes/detalhes': typeof ClientesDetalhesIndexRoute
-  '/clientes/selecionados': typeof ClientesSelecionadosIndexRoute
+  '/': typeof PublicIndexRoute
+  '/clientes': typeof PrivateClientesIndexRoute
+  '/clientes/detalhes': typeof PrivateClientesDetalhesIndexRoute
+  '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/clientes/': typeof ClientesIndexRoute
-  '/clientes/detalhes/': typeof ClientesDetalhesIndexRoute
-  '/clientes/selecionados/': typeof ClientesSelecionadosIndexRoute
+  '/_public/': typeof PublicIndexRoute
+  '/_private/clientes/': typeof PrivateClientesIndexRoute
+  '/_private/clientes/detalhes/': typeof PrivateClientesDetalhesIndexRoute
+  '/_private/clientes/selecionados/': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -62,57 +63,57 @@ export interface FileRouteTypes {
   to: '/' | '/clientes' | '/clientes/detalhes' | '/clientes/selecionados'
   id:
     | '__root__'
-    | '/'
-    | '/clientes/'
-    | '/clientes/detalhes/'
-    | '/clientes/selecionados/'
+    | '/_public/'
+    | '/_private/clientes/'
+    | '/_private/clientes/detalhes/'
+    | '/_private/clientes/selecionados/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ClientesIndexRoute: typeof ClientesIndexRoute
-  ClientesDetalhesIndexRoute: typeof ClientesDetalhesIndexRoute
-  ClientesSelecionadosIndexRoute: typeof ClientesSelecionadosIndexRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+  PrivateClientesIndexRoute: typeof PrivateClientesIndexRoute
+  PrivateClientesDetalhesIndexRoute: typeof PrivateClientesDetalhesIndexRoute
+  PrivateClientesSelecionadosIndexRoute: typeof PrivateClientesSelecionadosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clientes/': {
-      id: '/clientes/'
+    '/_private/clientes/': {
+      id: '/_private/clientes/'
       path: '/clientes'
       fullPath: '/clientes'
-      preLoaderRoute: typeof ClientesIndexRouteImport
+      preLoaderRoute: typeof PrivateClientesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clientes/selecionados/': {
-      id: '/clientes/selecionados/'
+    '/_private/clientes/selecionados/': {
+      id: '/_private/clientes/selecionados/'
       path: '/clientes/selecionados'
       fullPath: '/clientes/selecionados'
-      preLoaderRoute: typeof ClientesSelecionadosIndexRouteImport
+      preLoaderRoute: typeof PrivateClientesSelecionadosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/clientes/detalhes/': {
-      id: '/clientes/detalhes/'
+    '/_private/clientes/detalhes/': {
+      id: '/_private/clientes/detalhes/'
       path: '/clientes/detalhes'
       fullPath: '/clientes/detalhes'
-      preLoaderRoute: typeof ClientesDetalhesIndexRouteImport
+      preLoaderRoute: typeof PrivateClientesDetalhesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ClientesIndexRoute: ClientesIndexRoute,
-  ClientesDetalhesIndexRoute: ClientesDetalhesIndexRoute,
-  ClientesSelecionadosIndexRoute: ClientesSelecionadosIndexRoute,
+  PublicIndexRoute: PublicIndexRoute,
+  PrivateClientesIndexRoute: PrivateClientesIndexRoute,
+  PrivateClientesDetalhesIndexRoute: PrivateClientesDetalhesIndexRoute,
+  PrivateClientesSelecionadosIndexRoute: PrivateClientesSelecionadosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -4,7 +4,7 @@ import Title from '@/components/ui/Title'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_public/')({
   component: Index,
 })
 
