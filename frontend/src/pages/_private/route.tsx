@@ -1,3 +1,4 @@
+import Menu from '@/components/layout/Menu'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_private')({
@@ -14,7 +15,7 @@ export const Route = createFileRoute('/_private')({
 function RouteComponent() {
   return (
     <>
-      <h1> Private </h1>
+      <Menu />
       <Outlet />
     </>
   )
