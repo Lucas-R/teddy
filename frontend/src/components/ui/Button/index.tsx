@@ -17,7 +17,7 @@ const button = tv({
 });
 
 interface ButtonProps extends 
-    React.HTMLAttributes<HTMLButtonElement>,
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof button> {}
 
 export default function Button({ children, theme, size, className, ...props }: ButtonProps) {
