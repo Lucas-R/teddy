@@ -5,19 +5,20 @@ import React, { createContext, useState, useEffect } from 'react'
 export const AuthContext = createContext<AuthProps | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<LoginProps>(null);
+  const [user, setUser] = useState<LoginProps | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-        setUser(JSON.parse(user));
-    } else {
-        setIsLoading(false);
-    }
+    const data = localStorage.getItem('user');
 
-    setIsLoading(false);
+    if (data) {
+      setUser(JSON.parse(data));
+      setIsLoading(false);
+      setIsAuthenticated(true);
+    } else {
+      setIsLoading(false);
+    }
   }, [])
 
   if (isLoading) {
@@ -28,12 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     )
   }
 
-  const login = async (name: string) => {
-    if (name) {
-        const userLogin = { name };
-        setUser(userLogin);
+  const login = async (data: LoginProps) => {
+    if (data) {
+        setUser(data);
         setIsAuthenticated(true)
-        localStorage.setItem('user', `${userLogin}`);
+        localStorage.setItem('user', JSON.stringify(data));
     } else {
         throw new Error('Authentication failed')
     }
