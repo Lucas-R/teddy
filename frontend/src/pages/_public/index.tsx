@@ -3,7 +3,6 @@ import Container from '@/components/layout/Container'
 import Title from '@/components/ui/Title'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
-import { useAuth } from '@/hooks/useAuth'
 
 export const Route = createFileRoute('/_public/')({
   validateSearch: (search) => ({
