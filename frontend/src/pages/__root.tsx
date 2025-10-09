@@ -1,6 +1,12 @@
-import Template from '@/template';
-import { createRootRoute } from '@tanstack/react-router'
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
+import type { AuthProps } from '@/schemas/AuthSchema';
 
-const RootLayout = () => <Template />
+interface RouterContext {
+    auth: AuthProps
+}
 
-export const Route = createRootRoute({ component: RootLayout });
+export const Route = createRootRouteWithContext<RouterContext>()({ 
+    component: () => (
+        <Outlet />
+    )
+});
