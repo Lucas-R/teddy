@@ -1,13 +1,13 @@
 import { api } from "@/libs/axios";
 import type { FetchProps } from "@/schemas/FetchSchema";
-import { UserPostSchema, type UserPostProps } from "@/schemas/UserSchema";
+import { ClientPostSchema, type ClientPostProps } from "@/schemas/ClientSchema";
 
 interface createUserProps extends FetchProps {
-    payload: UserPostProps
+    payload: ClientPostProps
 }
 
 export default async function createUser<T>({ url, method, payload }: createUserProps) {
-    const validate = UserPostSchema.safeParse(payload);
+    const validate = ClientPostSchema.safeParse(payload);
     if (!validate.success) {
         return validate.error;
     } else {

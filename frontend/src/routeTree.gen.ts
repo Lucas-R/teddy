@@ -14,7 +14,7 @@ import { Route as AuthLoginRouteImport } from './pages/_auth/login'
 import { Route as PrivateClientesIndexRouteImport } from './pages/_private/clientes/index'
 import { Route as PrivateHomeIndexRouteImport } from './pages/_private/_home/index'
 import { Route as PrivateClientesSelecionadosIndexRouteImport } from './pages/_private/clientes/selecionados/index'
-import { Route as PrivateClientesDetalhesIndexRouteImport } from './pages/_private/clientes/detalhes/index'
+import { Route as PrivateClientesDetalhesIdRouteImport } from './pages/_private/clientes/detalhes/$id'
 
 const PrivateRouteRoute = PrivateRouteRouteImport.update({
   id: '/_private',
@@ -41,10 +41,10 @@ const PrivateClientesSelecionadosIndexRoute =
     path: '/clientes/selecionados/',
     getParentRoute: () => PrivateRouteRoute,
   } as any)
-const PrivateClientesDetalhesIndexRoute =
-  PrivateClientesDetalhesIndexRouteImport.update({
-    id: '/clientes/detalhes/',
-    path: '/clientes/detalhes/',
+const PrivateClientesDetalhesIdRoute =
+  PrivateClientesDetalhesIdRouteImport.update({
+    id: '/clientes/detalhes/$id',
+    path: '/clientes/detalhes/$id',
     getParentRoute: () => PrivateRouteRoute,
   } as any)
 
@@ -52,14 +52,14 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/': typeof PrivateHomeIndexRoute
   '/clientes': typeof PrivateClientesIndexRoute
-  '/clientes/detalhes': typeof PrivateClientesDetalhesIndexRoute
+  '/clientes/detalhes/$id': typeof PrivateClientesDetalhesIdRoute
   '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/': typeof PrivateHomeIndexRoute
   '/clientes': typeof PrivateClientesIndexRoute
-  '/clientes/detalhes': typeof PrivateClientesDetalhesIndexRoute
+  '/clientes/detalhes/$id': typeof PrivateClientesDetalhesIdRoute
   '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesById {
@@ -68,7 +68,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_private/_home/': typeof PrivateHomeIndexRoute
   '/_private/clientes/': typeof PrivateClientesIndexRoute
-  '/_private/clientes/detalhes/': typeof PrivateClientesDetalhesIndexRoute
+  '/_private/clientes/detalhes/$id': typeof PrivateClientesDetalhesIdRoute
   '/_private/clientes/selecionados/': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRouteTypes {
@@ -77,14 +77,14 @@ export interface FileRouteTypes {
     | '/login'
     | '/'
     | '/clientes'
-    | '/clientes/detalhes'
+    | '/clientes/detalhes/$id'
     | '/clientes/selecionados'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
     | '/'
     | '/clientes'
-    | '/clientes/detalhes'
+    | '/clientes/detalhes/$id'
     | '/clientes/selecionados'
   id:
     | '__root__'
@@ -92,7 +92,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_private/_home/'
     | '/_private/clientes/'
-    | '/_private/clientes/detalhes/'
+    | '/_private/clientes/detalhes/$id'
     | '/_private/clientes/selecionados/'
   fileRoutesById: FileRoutesById
 }
@@ -138,11 +138,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateClientesSelecionadosIndexRouteImport
       parentRoute: typeof PrivateRouteRoute
     }
-    '/_private/clientes/detalhes/': {
-      id: '/_private/clientes/detalhes/'
-      path: '/clientes/detalhes'
-      fullPath: '/clientes/detalhes'
-      preLoaderRoute: typeof PrivateClientesDetalhesIndexRouteImport
+    '/_private/clientes/detalhes/$id': {
+      id: '/_private/clientes/detalhes/$id'
+      path: '/clientes/detalhes/$id'
+      fullPath: '/clientes/detalhes/$id'
+      preLoaderRoute: typeof PrivateClientesDetalhesIdRouteImport
       parentRoute: typeof PrivateRouteRoute
     }
   }
@@ -151,14 +151,14 @@ declare module '@tanstack/react-router' {
 interface PrivateRouteRouteChildren {
   PrivateHomeIndexRoute: typeof PrivateHomeIndexRoute
   PrivateClientesIndexRoute: typeof PrivateClientesIndexRoute
-  PrivateClientesDetalhesIndexRoute: typeof PrivateClientesDetalhesIndexRoute
+  PrivateClientesDetalhesIdRoute: typeof PrivateClientesDetalhesIdRoute
   PrivateClientesSelecionadosIndexRoute: typeof PrivateClientesSelecionadosIndexRoute
 }
 
 const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
   PrivateHomeIndexRoute: PrivateHomeIndexRoute,
   PrivateClientesIndexRoute: PrivateClientesIndexRoute,
-  PrivateClientesDetalhesIndexRoute: PrivateClientesDetalhesIndexRoute,
+  PrivateClientesDetalhesIdRoute: PrivateClientesDetalhesIdRoute,
   PrivateClientesSelecionadosIndexRoute: PrivateClientesSelecionadosIndexRoute,
 }
 

@@ -67,8 +67,8 @@ export default function Menu() {
 
     return (
         <>
-            <div className="relative w-full h-20 shadow shadow-black/10 lg:h-[100px]">
-                <Container className="h-full flex items-center justify-between">
+            <div className="relative w-full h-20 bg-white shadow shadow-black/10 lg:h-[100px]">
+                <Container py="none" className="h-full flex items-center justify-between">
                     <div className="flex gap-4">
                         <button 
                             className="relative w-5 md:absolute md:left-6 top-1/2 md:-translate-y-1/2 md:w-6 2xl:left-[50px]"
@@ -101,7 +101,7 @@ export default function Menu() {
                     ${isOpen ? "bg-black/50 backdrop-blur-sm pointer-events-auto" : "bg-transparent pointer-events-none"}
             `}>
                 <div className={`
-                    fixed top-0 w-full flex flex-col h-screen rounded-tr-2xl bg-white duration-1000
+                    fixed top-0 w-full flex flex-col h-screen rounded-tr-2xl bg-offwhite duration-1000
                     ${isOpen ? "left-0" : "-left-full"}
                     sm:max-w-64
                 `}>

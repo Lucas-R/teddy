@@ -1,5 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
-import Container from '@/components/layout/Container'
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_private/_home/')({
   component: RouteComponent,
@@ -7,8 +6,8 @@ export const Route = createFileRoute('/_private/_home/')({
 
 function RouteComponent() {
   return (
-    <Container>
-      <div>Hello "/_authenticated/home/"!</div>
-    </Container>
-  )
+    <div className="grow flex items-center justify-center">
+      <h1 className="text-center">Home page</h1>
+    </div>
+  );
 }
