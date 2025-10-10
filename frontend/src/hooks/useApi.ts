@@ -5,12 +5,12 @@ import createUser from "@/helpers/createUser";
 import updateUser from "@/helpers/updateUser";
 import deleteUser from "@/helpers/deleteUser";
 
-export default function useApi<T = any>({ url, method }: FetchProps) {
+export default function useApi<T = any>({ url, method, options }: FetchProps) {
     const queryClient = useQueryClient()
     
     const query = useQuery({
-        queryKey: [url],
-        queryFn: async () => await findAllUsers<T>({ url, method }),
+        queryKey: [url, options?.params],
+        queryFn: async () => await findAllUsers<T>({ url, method, options }),
         enabled: method === 'get'
     });
 

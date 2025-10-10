@@ -3,52 +3,95 @@ import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
 import chevronDown from '@/assets/icons/chevron-down.png'
+import { useEffect, useState } from 'react'
+import useApi from '@/hooks/useApi'
+import type { ClientGetProps } from '@/schemas/ClientSchema'
 
 export const Route = createFileRoute('/_private/clientes/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(16);
+  const [totalPages, setTotalPages] = useState<number[]>([]);
+  const [clients, setClients] = useState<ClientGetProps[]>([]);
+  const { data, isLoading } = useApi({ 
+    url: "/users", 
+    method: "get", 
+    options: {
+      params: {
+        page,
+        limit
+      }
+    }
+  });
+
+  useEffect(() => {
+    if(data) {
+      const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
+      setClients(data.clients);
+      setTotal(data.clients.length);
+      setPage(data.currentPage)
+      setTotalPages(pages)
+    }
+  }, [data]);
+
+  if(isLoading || !clients) return <p> Carregando </p>
+
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm md:text-lg">
-          <strong>16</strong> clientes encontrados:
+          <strong>{total}</strong> clientes encontrados:
         </p>
 
         <div className="flex items-center gap-2">
           <p className="text-sm md:text-lg">Clientes por página:</p>
-          <button className="flex items-center justify-center gap-1 text-xs py-1 px-2 rounded-sm border-2 border-border">
+          <select
+            id="client"
+            value={limit}
+            onChange={(e) => setLimit(Number(e.target.value))}
+            className="flex items-center justify-center gap-1 text-xs py-1 px-2 rounded-sm border-2 border-border"
+          >
+            <option value="1">1</option>
+            <option value="4">2</option>
+            <option value="8">8</option>
+            <option value="16">16</option>
+            <option value="32">32</option>
+          </select>
+          {/* <button 
+            className="flex items-center justify-center gap-1 text-xs py-1 px-2 rounded-sm border-2 border-border"
+          >
             16
             <img 
               src={chevronDown} 
               alt="Escolha quantos mostrar por pagina"
               className="w-4 h-4" 
             />
-          </button>
+          </button> */}
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4 mb-5">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {!!clients && clients.map((client) => (
+          <Card key={client.id} data={client}/>
+        ))
+        }
       </div>
 
       <div className="flex flex-col gap-5">
         <Button theme="outline"> Criar cliente </Button>
 
         <div className="flex items-center justify-center">
-          <span className="block w-9 h-9"></span>
-          <span className="block w-9 h-9"></span>
-          <span className="block w-9 h-9"></span>
-          <span className="block w-9 h-9"></span>
-          <button className="w-9 h-9 bg-primary text-white rounded-sm">1</button>
-          <button className="w-9 h-9 rounded-sm">2</button>
-          <button className="w-9 h-9 rounded-sm">3</button>
-          <button className="w-9 h-9 rounded-sm">4</button>
-          <button className="w-9 h-9 rounded-sm">5</button>
+          {totalPages.map(p => (
+            <button 
+            key={p}
+              className={`w-9 h-9 rounded-sm ${page === p && "bg-primary text-white"}`}
+              onClick={() => setPage(p)}
+            >{p}</button>
+          ))}
         </div>
       </div>
     </div>

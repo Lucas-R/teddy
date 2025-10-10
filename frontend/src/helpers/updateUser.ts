@@ -1,13 +1,13 @@
 import { api } from "@/libs/axios";
 import type { FetchProps } from "@/schemas/FetchSchema";
-import { UserPutSchema, type UserPutProps } from "@/schemas/UserSchema";
+import { ClientPutSchema, type ClientPutProps } from "@/schemas/ClientSchema";
 
 interface updateUserProps extends FetchProps {
-    payload: UserPutProps
+    payload: ClientPutProps
 }
 
 export default async function updateUser<T>({ url, method, payload }: updateUserProps) {
-    const validate = UserPutSchema.safeParse(payload);
+    const validate = ClientPutSchema.safeParse(payload);
     if (!validate.success) {
         return validate.error;
     } else {
