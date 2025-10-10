@@ -22,7 +22,7 @@ export default function useApi<T = any>({ url, method, options }: FetchProps) {
                 case 'patch':
                     return await updateUser({ url, method, payload });
                 case 'delete':
-                    return await deleteUser({ url, method });
+                    return await deleteUser({ url, method, payload });
                 default:
                 throw new Error('Método inválido para mutation')
             }

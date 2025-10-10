@@ -4,6 +4,7 @@ import useApi from '@/hooks/useApi'
 import type { ClientGetProps } from '@/schemas/ClientSchema'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
+import Loading from '@/components/layout/Loanding'
 
 
 export const Route = createFileRoute('/_private/clientes/')({
@@ -37,7 +38,7 @@ function RouteComponent() {
     }
   }, [data]);
 
-  if(isLoading || !clients) return <p> Carregando </p>
+  if(isLoading) return <Loading />
 
   return (
     <div>
@@ -55,7 +56,7 @@ function RouteComponent() {
             className="flex items-center justify-center gap-1 text-xs py-1 px-2 rounded-sm border-2 border-border"
           >
             <option value="1">1</option>
-            <option value="4">2</option>
+            <option value="4">4</option>
             <option value="8">8</option>
             <option value="16">16</option>
             <option value="32">32</option>
