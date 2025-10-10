@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
+import Button from '@/components/ui/Button'
+import Card from '@/components/ui/Card'
 
 import chevronDown from '@/assets/icons/chevron-down.png'
-import Card from '@/components/ui/Card'
 
 export const Route = createFileRoute('/_private/clientes/')({
   component: RouteComponent,
@@ -35,8 +36,20 @@ function RouteComponent() {
         <Card />
       </div>
 
-      <div>
-        <p>footer</p>
+      <div className="flex flex-col gap-5">
+        <Button theme="outline"> Criar cliente </Button>
+
+        <div className="flex items-center justify-center">
+          <span className="block w-9 h-9"></span>
+          <span className="block w-9 h-9"></span>
+          <span className="block w-9 h-9"></span>
+          <span className="block w-9 h-9"></span>
+          <button className="w-9 h-9 bg-primary text-white rounded-sm">1</button>
+          <button className="w-9 h-9 rounded-sm">2</button>
+          <button className="w-9 h-9 rounded-sm">3</button>
+          <button className="w-9 h-9 rounded-sm">4</button>
+          <button className="w-9 h-9 rounded-sm">5</button>
+        </div>
       </div>
     </div>
   )

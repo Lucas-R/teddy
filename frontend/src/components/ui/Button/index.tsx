@@ -4,6 +4,7 @@ const button = tv({
     base: "w-auto duration-500",
     variants: {
         theme: {
+            outline: "max-h-10! text-sm text-primary font-bold rounded-sm border-2 border-primary hover:bg-primary hover:text-white",
             default: "text-2xl text-white font-bold rounded-sm bg-primary hover:bg-primary-hover"
         },
         size: {
