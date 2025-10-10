@@ -1,11 +1,10 @@
+import { useEffect, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
+import useApi from '@/hooks/useApi'
+import type { ClientGetProps } from '@/schemas/ClientSchema'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
-import chevronDown from '@/assets/icons/chevron-down.png'
-import { useEffect, useState } from 'react'
-import useApi from '@/hooks/useApi'
-import type { ClientGetProps } from '@/schemas/ClientSchema'
 
 export const Route = createFileRoute('/_private/clientes/')({
   component: RouteComponent,
