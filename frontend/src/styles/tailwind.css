@@ -4,11 +4,26 @@
     --font-primary: "Inter", sans-serif;
     
     --color-primary: #EC6724;
+    --color-primary-hover: #be5521;
     --color-border: #D9D9D9;
     --color-black: #0F0F0F;
     --color-gray: #AAAAAA;
+    --color-offwhite: #F5F5F5;
+    --color-white: #FFF;
 }
 
 body {
-    @apply font-primary;
+    @apply font-primary text-black bg-offwhite select-none;
+}
+
+button {
+    @apply cursor-pointer;
+}
+
+.no-scrollbar {
+    overflow: auto;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
 }

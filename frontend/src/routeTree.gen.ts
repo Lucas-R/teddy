@@ -9,50 +9,166 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './pages/__root'
-import { Route as IndexRouteImport } from './pages/index'
+import { Route as PrivateRouteRouteImport } from './pages/_private/route'
+import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as PrivateClientesIndexRouteImport } from './pages/_private/clientes/index'
+import { Route as PrivateHomeIndexRouteImport } from './pages/_private/_home/index'
+import { Route as PrivateClientesSelecionadosIndexRouteImport } from './pages/_private/clientes/selecionados/index'
+import { Route as PrivateClientesDetalhesIdRouteImport } from './pages/_private/clientes/detalhes/$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const PrivateRouteRoute = PrivateRouteRouteImport.update({
+  id: '/_private',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/_auth/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateClientesIndexRoute = PrivateClientesIndexRouteImport.update({
+  id: '/clientes/',
+  path: '/clientes/',
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const PrivateHomeIndexRoute = PrivateHomeIndexRouteImport.update({
+  id: '/_home/',
+  path: '/',
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const PrivateClientesSelecionadosIndexRoute =
+  PrivateClientesSelecionadosIndexRouteImport.update({
+    id: '/clientes/selecionados/',
+    path: '/clientes/selecionados/',
+    getParentRoute: () => PrivateRouteRoute,
+  } as any)
+const PrivateClientesDetalhesIdRoute =
+  PrivateClientesDetalhesIdRouteImport.update({
+    id: '/clientes/detalhes/$id',
+    path: '/clientes/detalhes/$id',
+    getParentRoute: () => PrivateRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/login': typeof AuthLoginRoute
+  '/': typeof PrivateHomeIndexRoute
+  '/clientes': typeof PrivateClientesIndexRoute
+  '/clientes/detalhes/$id': typeof PrivateClientesDetalhesIdRoute
+  '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/login': typeof AuthLoginRoute
+  '/': typeof PrivateHomeIndexRoute
+  '/clientes': typeof PrivateClientesIndexRoute
+  '/clientes/detalhes/$id': typeof PrivateClientesDetalhesIdRoute
+  '/clientes/selecionados': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_private': typeof PrivateRouteRouteWithChildren
+  '/_auth/login': typeof AuthLoginRoute
+  '/_private/_home/': typeof PrivateHomeIndexRoute
+  '/_private/clientes/': typeof PrivateClientesIndexRoute
+  '/_private/clientes/detalhes/$id': typeof PrivateClientesDetalhesIdRoute
+  '/_private/clientes/selecionados/': typeof PrivateClientesSelecionadosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/login'
+    | '/'
+    | '/clientes'
+    | '/clientes/detalhes/$id'
+    | '/clientes/selecionados'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/login'
+    | '/'
+    | '/clientes'
+    | '/clientes/detalhes/$id'
+    | '/clientes/selecionados'
+  id:
+    | '__root__'
+    | '/_private'
+    | '/_auth/login'
+    | '/_private/_home/'
+    | '/_private/clientes/'
+    | '/_private/clientes/detalhes/$id'
+    | '/_private/clientes/selecionados/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  PrivateRouteRoute: typeof PrivateRouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_private': {
+      id: '/_private'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PrivateRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_private/clientes/': {
+      id: '/_private/clientes/'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof PrivateClientesIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/_home/': {
+      id: '/_private/_home/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PrivateHomeIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/clientes/selecionados/': {
+      id: '/_private/clientes/selecionados/'
+      path: '/clientes/selecionados'
+      fullPath: '/clientes/selecionados'
+      preLoaderRoute: typeof PrivateClientesSelecionadosIndexRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/clientes/detalhes/$id': {
+      id: '/_private/clientes/detalhes/$id'
+      path: '/clientes/detalhes/$id'
+      fullPath: '/clientes/detalhes/$id'
+      preLoaderRoute: typeof PrivateClientesDetalhesIdRouteImport
+      parentRoute: typeof PrivateRouteRoute
     }
   }
 }
 
+interface PrivateRouteRouteChildren {
+  PrivateHomeIndexRoute: typeof PrivateHomeIndexRoute
+  PrivateClientesIndexRoute: typeof PrivateClientesIndexRoute
+  PrivateClientesDetalhesIdRoute: typeof PrivateClientesDetalhesIdRoute
+  PrivateClientesSelecionadosIndexRoute: typeof PrivateClientesSelecionadosIndexRoute
+}
+
+const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
+  PrivateHomeIndexRoute: PrivateHomeIndexRoute,
+  PrivateClientesIndexRoute: PrivateClientesIndexRoute,
+  PrivateClientesDetalhesIdRoute: PrivateClientesDetalhesIdRoute,
+  PrivateClientesSelecionadosIndexRoute: PrivateClientesSelecionadosIndexRoute,
+}
+
+const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
+  PrivateRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  PrivateRouteRoute: PrivateRouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
