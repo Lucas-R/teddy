@@ -1,38 +1,22 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { formatToBRL } from "@/helpers/formatToBRL";
-import type { ClientGetProps } from "@/schemas/ClientSchema";
-import useApi from "@/hooks/useApi";
+import type { ClientProps } from "@/schemas/ClientSchema";
 import ModalForm from "../ModalForm";
+import ModalDelete from "../ModalDelete";
+import Title from "../Title";
 
 import plus from "@/assets/icons/plus.png"
 import pen from "@/assets/icons/pen.png"
 import trash from "@/assets/icons/trash.png"
-import Loading from "@/components/layout/Loanding";
-import Title from "../Title";
 
 interface CardProps {
-    data: ClientGetProps
+    data: ClientProps
 }
 
 export default function Card({ data }: CardProps) {
     const [updateModal, setUpdateModal] = useState(false);
-    const [isLoading, setIsLoding] = useState(false);
-    const { mutation } = useApi({ url: '/users' });
-
-    async function handleDelete(id: number) {
-        setIsLoding(true);
-
-        try {
-            await mutation.mutateAsync({ payload: { id }, method: "delete" });
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setIsLoding(false);
-        }
-    }
-
-    if (isLoading) return <Loading />
+    const [deleteModal, setDeleteModal] = useState(false);
 
     return (
         <>
@@ -63,7 +47,7 @@ export default function Card({ data }: CardProps) {
                     </button>
                     <button 
                         className="p-1 rounded-full hover:bg-red-300"
-                        onClick={() => handleDelete(data.id)}
+                        onClick={() => setDeleteModal(true)}
                         >
                         
                         <img src={trash} alt="Excluir cliente" className="w-5 h-5" />
@@ -77,6 +61,11 @@ export default function Card({ data }: CardProps) {
                 method="patch"
                 data={data}
             />
-        </>
+            <ModalDelete
+                openModal={deleteModal}
+                onClose={() => setDeleteModal(false)}
+                data={data}
+            />
+        </>     
     )
 }

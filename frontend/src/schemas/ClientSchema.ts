@@ -14,11 +14,11 @@ export const ClientPostPatchSchema = BaseClientSchema.partial().extend({
   id: z.number().optional()
 });
 
-export const ClientGetSchema = BaseClientSchema.extend({
+export const ClientSchema = BaseClientSchema.extend({
   id: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
 
-export type ClientGetProps = z.infer<typeof ClientGetSchema>
+export type ClientProps = z.infer<typeof ClientSchema>
 export type ClientPostPatchProps = z.infer<typeof ClientPostPatchSchema>

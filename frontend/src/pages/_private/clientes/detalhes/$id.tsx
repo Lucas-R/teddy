@@ -13,8 +13,6 @@ function RouteComponent() {
 
   if(isLoading) return <Loading />
 
-  console.log(data);
-
   return (
     <div>
       {data?.id}
