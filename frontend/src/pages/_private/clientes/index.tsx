@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import useApi from '@/hooks/useApi'
-import type { ClientGetProps } from '@/schemas/ClientSchema'
+import type { ClientProps } from '@/schemas/ClientSchema'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/layout/Loanding'
@@ -18,7 +18,7 @@ function RouteComponent() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
   const [totalPages, setTotalPages] = useState<number[]>([]);
-  const [clients, setClients] = useState<ClientGetProps[]>([]);
+  const [clients, setClients] = useState<ClientProps[]>([]);
   const { data, isLoading } = useApi({ 
     url: "/users", 
     options: {
