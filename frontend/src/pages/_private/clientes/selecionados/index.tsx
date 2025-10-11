@@ -4,6 +4,7 @@ import useClient from '@/hooks/useClient'
 import type { ClientProps } from '@/schemas/ClientSchema';
 import { api } from '@/libs/axios';
 import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
 
 export const Route = createFileRoute('/_private/clientes/selecionados/')({
   component: RouteComponent,
@@ -11,7 +12,7 @@ export const Route = createFileRoute('/_private/clientes/selecionados/')({
 
 function RouteComponent() {
   const [selected, setSelected] = useState<ClientProps[]>([]);
-  const { remove, selectedList } = useClient();
+  const { remove, clear, selectedList } = useClient();
 
   async function handleList() {
     const data = await Promise.all(
@@ -34,15 +35,21 @@ function RouteComponent() {
   }, [selectedList]);
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4 mb-5">
-      {selected.map((client) => (
+    <>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4 mb-5">
+        {selected.map((client) => (
           <Card 
-            key={client.id} 
-            data={client}
-            select={() => remove(client.id)}
+          key={client.id} 
+          data={client}
+          select={() => remove(client.id)}
+          actions={false}
           />
         ))
       } 
-    </div>
+      </div>
+      <div className="flex flex-col gap-5">
+        <Button size="md" theme="outline" onClick={() => clear()}> Limpar clientes selecionados </Button>
+      </div>
+    </>
   )
 }

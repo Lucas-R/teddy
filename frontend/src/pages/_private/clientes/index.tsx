@@ -98,7 +98,7 @@ function RouteComponent() {
         </div>
 
         <div className="flex flex-col gap-5">
-          <Button theme="outline" onClick={() => setCreateModal(true)}> Criar cliente </Button>
+          <Button size="md" theme="outline" onClick={() => setCreateModal(true)}> Criar cliente </Button>
 
           <div className="flex items-center justify-center">
             {totalPages.map(p => (

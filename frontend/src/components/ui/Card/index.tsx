@@ -15,10 +15,10 @@ import useClient from "@/hooks/useClient";
 interface CardProps {
     data: ClientProps,
     select: () => void,
-    cb?: () => void
+    actions?: boolean 
 }
 
-export default function Card({ data, select, cb }: CardProps) {
+export default function Card({ data, select, actions = true }: CardProps) {
     const { included } = useClient();
     const [isSelected, setIsSelected] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
@@ -37,7 +37,6 @@ export default function Card({ data, select, cb }: CardProps) {
         <>
             <div 
                 className="relative z-40 bg-white rounded-sm shadow-sm shadow-black/10 duration-300 hover:scale-105"
-                onClick={cb}
             >
                 <Link 
                     className="grid grid-rows-1 gap-2.5 pt-[15px] px-4 mb-[11px]"
@@ -49,30 +48,48 @@ export default function Card({ data, select, cb }: CardProps) {
                     <p className="text-center">Empresa: {formatToBRL(data.companyValuation)}</p>   
                 </Link>
 
-                <div className="relative z-50 pb-[15px] px-4 flex items-center justify-between">
-                    <button 
-                        className="p-1 rounded-full hover:bg-emerald-300"
-                        onClick={handleSelect}
-                    >
-                        {isSelected
-                            ? <img src={minus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
-                            : <img src={plus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
-                        }
-                        
-                    </button>
-                    <button 
-                        className="p-1 rounded-full hover:bg-black/30"
-                        onClick={() => setUpdateModal(true)}
-                    >
-                        <img src={pen} alt="Editar cliente" className="w-5 h-5" />
-                    </button>
-                    <button 
-                        className="p-1 rounded-full hover:bg-red-300"
-                        onClick={() => setDeleteModal(true)}
+                <div className={`
+                    relative z-50 pb-[15px] px-4 flex items-center
+                    ${actions ? "justify-between" : "justify-end"}
+                `}>
+                   {actions 
+                   ? (
+                    <>
+                        <button 
+                            className="p-1 rounded-full hover:bg-emerald-300"
+                            onClick={handleSelect}
                         >
-                        
-                        <img src={trash} alt="Excluir cliente" className="w-5 h-5" />
-                    </button>
+                            {isSelected
+                                ? <img src={minus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
+                                : <img src={plus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
+                            }
+                            
+                        </button>
+                        <button 
+                            className="p-1 rounded-full hover:bg-black/30"
+                            onClick={() => setUpdateModal(true)}
+                        >
+                            <img src={pen} alt="Editar cliente" className="w-5 h-5" />
+                        </button>
+                        <button 
+                            className="p-1 rounded-full hover:bg-red-300"
+                            onClick={() => setDeleteModal(true)}
+                            >
+                            
+                            <img src={trash} alt="Excluir cliente" className="w-5 h-5" />
+                        </button>
+                    </>
+                   )
+                   : (
+                        <button 
+                            className="p-1 rounded-full hover:bg-emerald-300"
+                            onClick={handleSelect}
+                        >
+                            <img src={minus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />  
+                        </button>
+                   )
+                   }
+                    
                 </div>
             </div>
             <ModalForm 
