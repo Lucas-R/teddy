@@ -10,16 +10,15 @@ const BaseClientSchema = z.object({
     .positive("O valor da empresa deve ser maior que zero")
 })
 
-export const ClientPostSchema = BaseClientSchema;
+export const ClientPostPatchSchema = BaseClientSchema.partial().extend({
+  id: z.number().optional()
+});
 
-export const ClientPutSchema = BaseClientSchema.partial();
-
-export const ClientGetSchema = ClientPutSchema.extend({
+export const ClientSchema = BaseClientSchema.extend({
   id: z.number(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
 
-export type ClientGetProps = z.infer<typeof ClientGetSchema>
-export type ClientPutProps = z.infer<typeof ClientPutSchema>
-export type ClientPostProps = z.infer<typeof ClientPostSchema>
+export type ClientProps = z.infer<typeof ClientSchema>
+export type ClientPostPatchProps = z.infer<typeof ClientPostPatchSchema>

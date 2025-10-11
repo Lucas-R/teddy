@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import useApi from '@/hooks/useApi'
-import type { ClientGetProps } from '@/schemas/ClientSchema'
+import type { ClientProps } from '@/schemas/ClientSchema'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Loading from '@/components/layout/Loanding'
 import ModalForm from '@/components/ui/ModalForm'
+import useClient from '@/hooks/useClient'
 
 
 export const Route = createFileRoute('/_private/clientes/')({
@@ -13,12 +14,13 @@ export const Route = createFileRoute('/_private/clientes/')({
 })
 
 function RouteComponent() {
+  const { add, remove, included } = useClient();
   const [createModal, setCreateModal] = useState(false);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(16);
   const [totalPages, setTotalPages] = useState<number[]>([]);
-  const [clients, setClients] = useState<ClientGetProps[]>([]);
+  const [clients, setClients] = useState<ClientProps[]>([]);
   const { data, isLoading } = useApi({ 
     url: "/users", 
     options: {
@@ -38,6 +40,14 @@ function RouteComponent() {
       setTotalPages(pages)
     }
   }, [data]);
+
+  function handleSelect(id: number) {
+    if (included(id)) {
+      remove(id);
+    } else {
+      add(id);
+    }
+  }
 
   if(isLoading) return <Loading />
 
@@ -78,20 +88,24 @@ function RouteComponent() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-4 mb-5">
           {!!clients && clients.map((client) => (
-            <Card key={client.id} data={client}/>
+            <Card 
+              key={client.id} 
+              data={client}
+              select={() => handleSelect(client.id)}
+            />
           ))
-        }
+          } 
         </div>
 
         <div className="flex flex-col gap-5">
-          <Button theme="outline" onClick={() => setCreateModal(true)}> Criar cliente </Button>
+          <Button size="md" theme="outline" onClick={() => setCreateModal(true)}> Criar cliente </Button>
 
           <div className="flex items-center justify-center">
             {totalPages.map(p => (
               <button 
-              key={p}
-              className={`w-9 h-9 rounded-sm ${page === p && "bg-primary text-white"}`}
-              onClick={() => setPage(p)}
+                key={p}
+                className={`w-9 h-9 rounded-sm ${page === p && "bg-primary text-white"}`}
+                onClick={() => setPage(p)}
               >{p}</button>
             ))}
           </div>
@@ -101,6 +115,7 @@ function RouteComponent() {
         title="Criar cliente:" 
         openModal={createModal}
         onClose={() => setCreateModal(false)}
+        method="post"
       />
     </>
   )
