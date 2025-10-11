@@ -97,11 +97,11 @@ export default function Menu() {
             </div>
 
             <div className={`
-                    fixed top-0 left-0 w-full h-screen duration-500 delay-200
+                    fixed top-0 left-0 z-50 w-full h-screen duration-500 delay-200
                     ${isOpen ? "bg-black/50 backdrop-blur-sm pointer-events-auto" : "bg-transparent pointer-events-none"}
             `}>
                 <div className={`
-                    fixed top-0 w-full flex flex-col h-screen rounded-tr-2xl bg-offwhite duration-1000
+                    fixed top-0  w-full flex flex-col h-screen rounded-tr-2xl bg-offwhite duration-1000
                     ${isOpen ? "left-0" : "-left-full"}
                     sm:max-w-64
                 `}>

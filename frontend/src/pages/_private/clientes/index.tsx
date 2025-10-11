@@ -35,7 +35,7 @@ function RouteComponent() {
     if(data) {
       const pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
       setClients(data.clients);
-      setTotal(data.clients.length);
+      setTotal(data.clients ?  data.clients.length : 0);
       setPage(data.currentPage)
       setTotalPages(pages)
     }
