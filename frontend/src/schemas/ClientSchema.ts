@@ -2,8 +2,12 @@ import { z } from "zod"
 
 const BaseClientSchema = z.object({
   name: z.string().min(1),
-  salary: z.number().positive(),
-  companyValuation: z.number().nonnegative(),
+  salary: z
+    .number({ message: "Aceita apenas números" })
+    .positive("O salário deve ser maior que zero"),
+  companyValuation: z
+    .number({ message: "Aceita apenas números" })
+    .positive("O valor da empresa deve ser maior que zero")
 })
 
 export const ClientPostSchema = BaseClientSchema;

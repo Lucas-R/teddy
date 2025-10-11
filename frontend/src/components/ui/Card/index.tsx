@@ -8,6 +8,7 @@ import plus from "@/assets/icons/plus.png"
 import pen from "@/assets/icons/pen.png"
 import trash from "@/assets/icons/trash.png"
 import Loading from "@/components/layout/Loanding";
+import Title from "../Title";
 
 interface CardProps {
     data: ClientGetProps
@@ -40,7 +41,7 @@ export default function Card({ data }: CardProps) {
                 to="/clientes/detalhes/$id" 
                 params={{ id: `${data.id}` }}
             >
-                <h4 className="font-bold text-center">{data.name}</h4>
+                <Title as="h6" heading="h6" className="text-center">{data.name}</Title>
                 <p className="text-center">Salário: {formatToBRL(data.salary)}</p>
                 <p className="text-center">Empresa: {formatToBRL(data.companyValuation)}</p>   
             </Link>

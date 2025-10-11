@@ -5,10 +5,11 @@ const button = tv({
     variants: {
         theme: {
             outline: "max-h-10! text-sm text-primary font-bold rounded-sm border-2 border-primary hover:bg-primary hover:text-white",
-            default: "text-2xl text-white font-bold rounded-sm bg-primary hover:bg-primary-hover"
+            default: "text-white font-bold rounded-sm bg-primary hover:bg-primary-hover"
         },
         size: {
-            default: "h-10 px-4 lg:h-[60px]"
+            md: "text-sm h-10 px-4",
+            default: "text-2xl h-10 px-4 lg:h-[60px]"
         }
     },
     defaultVariants: {
