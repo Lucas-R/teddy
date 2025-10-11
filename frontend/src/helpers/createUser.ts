@@ -1,8 +1,9 @@
 import { api } from "@/libs/axios";
-import type { FetchProps } from "@/schemas/FetchSchema";
+import type { MutationProps } from "@/schemas/MutationSchema";
 import { ClientPostSchema, type ClientPostProps } from "@/schemas/ClientSchema";
+import type { FetchProps } from "@/schemas/FetchSchema";
 
-interface createUserProps extends FetchProps {
+interface createUserProps extends MutationProps, FetchProps {
     payload: ClientPostProps
 }
 

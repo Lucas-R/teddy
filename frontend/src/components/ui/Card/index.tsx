@@ -15,13 +15,13 @@ interface CardProps {
 
 export default function Card({ data }: CardProps) {
     const [isLoading, setIsLoding] = useState(false);
-    const { mutation: del } = useApi({ url: '/users', method: "delete"  });
+    const { mutation } = useApi({ url: '/users' });
 
     async function handleDelete(id: number) {
         setIsLoding(true);
 
         try {
-            await del.mutateAsync({ id });
+            await mutation.mutateAsync({ payload: id, method: "delete" });
         } catch (error) {
             console.log(error);
         } finally {

@@ -19,7 +19,6 @@ function RouteComponent() {
   const [clients, setClients] = useState<ClientGetProps[]>([]);
   const { data, isLoading } = useApi({ 
     url: "/users", 
-    method: "get", 
     options: {
       params: {
         page,
