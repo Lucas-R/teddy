@@ -7,6 +7,7 @@ import Title from "../Title"
 import Button from "../Button"
 
 import x from "@/assets/icons/x.png"
+import useClient from "@/hooks/useClient"
 
 interface ModalFormProps {
     openModal: boolean,
@@ -15,6 +16,7 @@ interface ModalFormProps {
 }
 
 export default function ModalDelete({ openModal, onClose, data }: ModalFormProps) {
+    const { included, remove } = useClient();
     const [isLoading, setIsLoding] = useState(false);
     const { mutation } = useApi({ url: "/users" });
 
@@ -27,6 +29,7 @@ export default function ModalDelete({ openModal, onClose, data }: ModalFormProps
             console.log(error);
         } finally {
             setIsLoding(false);
+            if(included(data.id)) remove(data.id);
         }
     }
 

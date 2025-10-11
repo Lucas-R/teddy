@@ -21,6 +21,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  useEffect(() => {
+    if(user) {
+      setIsAuthenticated(true)
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+  }, [user]);
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -31,9 +38,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (data: LoginProps) => {
     if (data) {
-        setUser(data);
-        setIsAuthenticated(true)
-        localStorage.setItem('user', JSON.stringify(data));
+        setUser({
+          name: data.name,
+          selected: []
+        });
     } else {
         throw new Error('Authentication failed')
     }

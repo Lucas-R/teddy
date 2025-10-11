@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { formatToBRL } from "@/helpers/formatToBRL";
 import type { ClientProps } from "@/schemas/ClientSchema";
@@ -7,22 +7,38 @@ import ModalDelete from "../ModalDelete";
 import Title from "../Title";
 
 import plus from "@/assets/icons/plus.png"
+import minus from "@/assets/icons/minus.png"
 import pen from "@/assets/icons/pen.png"
 import trash from "@/assets/icons/trash.png"
+import useClient from "@/hooks/useClient";
 
 interface CardProps {
-    data: ClientProps
+    data: ClientProps,
+    select: () => void,
+    cb?: () => void
 }
 
-export default function Card({ data }: CardProps) {
+export default function Card({ data, select, cb }: CardProps) {
+    const { included } = useClient();
+    const [isSelected, setIsSelected] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+
+    useEffect(() => {
+        setIsSelected(included(data.id))
+    }, []);
+
+    function  handleSelect() {
+        select();
+        setIsSelected(prev => !prev);
+    }
 
     return (
         <>
             <div 
                 className="relative z-40 bg-white rounded-sm shadow-sm shadow-black/10 duration-300 hover:scale-105"
-                >
+                onClick={cb}
+            >
                 <Link 
                     className="grid grid-rows-1 gap-2.5 pt-[15px] px-4 mb-[11px]"
                     to="/clientes/detalhes/$id" 
@@ -36,8 +52,13 @@ export default function Card({ data }: CardProps) {
                 <div className="relative z-50 pb-[15px] px-4 flex items-center justify-between">
                     <button 
                         className="p-1 rounded-full hover:bg-emerald-300"
+                        onClick={handleSelect}
                     >
-                        <img src={plus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
+                        {isSelected
+                            ? <img src={minus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
+                            : <img src={plus} alt="Adicionar cliente aos selecionados" className="w-4 h-4" />
+                        }
+                        
                     </button>
                     <button 
                         className="p-1 rounded-full hover:bg-black/30"
