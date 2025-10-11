@@ -101,6 +101,7 @@ function RouteComponent() {
         title="Criar cliente:" 
         openModal={createModal}
         onClose={() => setCreateModal(false)}
+        method="post"
       />
     </>
   )

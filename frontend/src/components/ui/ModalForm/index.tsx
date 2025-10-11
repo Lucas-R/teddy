@@ -1,7 +1,9 @@
+import { useState } from "react"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ClientPostSchema, type ClientPostProps } from "@/schemas/ClientSchema"
+import { ClientPostPatchSchema, type ClientPostPatchProps } from "@/schemas/ClientSchema"
 import Container from "@/components/layout/Container"
+import Loading from "@/components/layout/Loanding"
 import useApi from "@/hooks/useApi"
 import Title from "../Title"
 import Input from "../Input"
@@ -12,29 +14,44 @@ import x from "@/assets/icons/x.png"
 interface ModalFormProps {
     openModal: boolean,
     onClose: () => void
-    title: string
+    title: string,
+    method: "post" | "patch",
+    data?: ClientPostPatchProps
 }
 
-export default function ModalForm({ openModal, onClose, title }: ModalFormProps) {
+export default function ModalForm({ openModal, onClose, title, method, data }: ModalFormProps) {
+    const [isLoading, setIsLoding] = useState(false);
     const { mutation } = useApi({ url: "/users" });
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<ClientPostProps>({
-        resolver: zodResolver(ClientPostSchema),
+    } = useForm<ClientPostPatchProps>({
+        resolver: zodResolver(ClientPostPatchSchema),
+        defaultValues: {
+            id: data?.id || undefined,
+            name: data?.name || "",
+            salary: data?.salary || undefined,
+            companyValuation: data?.companyValuation || undefined,
+        }
     });
-    const onSubmit: SubmitHandler<ClientPostProps> = (data) => {
+    const onSubmit: SubmitHandler<ClientPostPatchProps> = async (data) => {
+        setIsLoding(true);
+
         try {
-            mutation.mutateAsync({ payload: data, method: "post" });
+            const response: any = await mutation.mutateAsync({ payload: data, method });
+            const { createdAt, updatedAt, ...rest } = response;
+            reset(method === "patch" ? rest : {});
         } catch (error) {
             console.log(error);
         } finally {
             onClose();
-            reset();
+            setIsLoding(false);
         }
     }
+
+    if (isLoading) return <Loading />
 
     return (
         <Container size="full" className={`
@@ -78,7 +95,9 @@ export default function ModalForm({ openModal, onClose, title }: ModalFormProps)
                         />
                         {errors.companyValuation && <p className="text-xs text-red-500">{errors.companyValuation.message}*</p>}
                     </div>
-                    <Button size="md" type="submit">Criar cliente</Button>
+                    <Button size="md" type="submit">
+                        {method === "patch" ? "Editar cliente" : "Criar cliente"}
+                    </Button>
                 </form>
             </div>
         </Container>
