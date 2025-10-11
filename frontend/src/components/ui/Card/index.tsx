@@ -1,16 +1,37 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { formatToBRL } from "@/helpers/formatToBRL";
 import type { ClientGetProps } from "@/schemas/ClientSchema";
+import useApi from "@/hooks/useApi";
 
 import plus from "@/assets/icons/plus.png"
 import pen from "@/assets/icons/pen.png"
 import trash from "@/assets/icons/trash.png"
+import Loading from "@/components/layout/Loanding";
+import Title from "../Title";
 
 interface CardProps {
     data: ClientGetProps
 }
 
 export default function Card({ data }: CardProps) {
+    const [isLoading, setIsLoding] = useState(false);
+    const { mutation } = useApi({ url: '/users' });
+
+    async function handleDelete(id: number) {
+        setIsLoding(true);
+
+        try {
+            await mutation.mutateAsync({ payload: id, method: "delete" });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoding(false);
+        }
+    }
+
+    if (isLoading) return <Loading />
+
     return (
         <div 
             className="relative z-40 bg-white rounded-sm shadow-sm shadow-black/10 duration-300 hover:scale-105"
@@ -20,7 +41,7 @@ export default function Card({ data }: CardProps) {
                 to="/clientes/detalhes/$id" 
                 params={{ id: `${data.id}` }}
             >
-                <h4 className="font-bold text-center">{data.name}</h4>
+                <Title as="h6" heading="h6" className="text-center">{data.name}</Title>
                 <p className="text-center">Salário: {formatToBRL(data.salary)}</p>
                 <p className="text-center">Empresa: {formatToBRL(data.companyValuation)}</p>   
             </Link>
@@ -37,7 +58,9 @@ export default function Card({ data }: CardProps) {
                     <img src={pen} alt="Editar cliente" className="w-5 h-5" />
                 </button>
                 <button 
-                    className="p-1 rounded-full hover:bg-red-300">
+                    className="p-1 rounded-full hover:bg-red-300"
+                    onClick={() => handleDelete(data.id)}
+                >
                     
                     <img src={trash} alt="Excluir cliente" className="w-5 h-5" />
                 </button>

@@ -1,17 +1,14 @@
 import { tv, type VariantProps } from "tailwind-variants"
 
 const input = tv({
-    base: "w-full rounded-sm duration-500",
+    base: "w-full border-2 border-border placeholder:text-gray focus:outline-primary rounded-sm duration-500",
     variants: {
-        theme: {
-            default: "text-base lg:text-2xl border-2 border-border placeholder:text-gray focus:outline-primary"
-        },
         variant: {
-            default: "h-10 px-4 lg:h-[60px]"
-        }
+            md: "h-10 px-4",
+            default: "text-base h-10 px-4 lg:h-[60px] lg:text-2xl"
+        },
     },
     defaultVariants: {
-        theme: "default",
         variant: "default"
     }
 });
@@ -20,8 +17,8 @@ interface InputProps extends
     React.InputHTMLAttributes<HTMLInputElement>,
     VariantProps<typeof input> {}
 
-export default function Input({ children, theme, variant, className, ...props }: InputProps) {
+export default function Input({ children, variant, className, ...props }: InputProps) {
     return (
-        <input className={input({ theme, variant, class: className })} {...props} />
+        <input className={input({ variant, class: className })} {...props} />
     )
 }
